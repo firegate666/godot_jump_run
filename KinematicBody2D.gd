@@ -4,10 +4,13 @@ const GRAVITY = 20
 const ACCELERATION = 25
 const MAX_MOVE_SPEED = 200
 const JUMP_SPEED = 550
+const SECOND_JUMP_SPEED = 300
 const UP = Vector2(0, -1)
 const FRICTION_GROUND = 0.2
 const FRICTION_AIR = 0.05
+
 var motion = Vector2()
+var can_double_jump = true
 
 func min_max(value, lower, upper):
 	value = min(value, upper)
@@ -38,11 +41,19 @@ func _physics_process(delta):
 			$Sprite.animation = "Jump"
 		if friction:
 			motion.x = lerp(motion.x, 0, FRICTION_GROUND)
+			
+		can_double_jump = true
 	else:
+		if can_double_jump and Input.is_action_just_pressed("ui_up"):
+			motion.y -= SECOND_JUMP_SPEED
+			$Sprite.animation = "Jump"
+			can_double_jump = false
+		
 		if friction:
 			motion.x = lerp(motion.x, 0, FRICTION_AIR)
 		if motion.y > 60:
 			$Sprite.animation = "Fall"
+			can_double_jump = false
 		elif motion.y >= -60 and motion.y <= 60:
 			$Sprite.animation = "JumpIdle"
 		else:
