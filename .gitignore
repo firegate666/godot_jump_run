@@ -7,3 +7,6 @@ export_presets.cfg
 .mono/
 data_*/
 
+# os type shit
+.DS_Store
+
