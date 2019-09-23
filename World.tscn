@@ -20,4 +20,4 @@ __meta__ = {
 
 [node name="LevelWarp" parent="." instance=ExtResource( 3 )]
 position = Vector2( 512, 288 )
-level_name = "World2"
+next_world = "res://World2.tscn"
